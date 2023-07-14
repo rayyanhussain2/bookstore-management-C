@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "string.h": "c",
+        "corecrt.h": "c",
+        "vcruntime.h": "c",
+        "corecrt_wstring.h": "c",
+        "vcruntime_string.h": "c",
+        "corecrt_memory.h": "c"
+    }
+}
