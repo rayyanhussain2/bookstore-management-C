@@ -35,3 +35,13 @@ Remember to manage your time effectively and prioritize implementing efficient d
 For points 2 and 3:
 Read from File
 Create the AVL Tree
+
+
+
+avl tree used
+Using a file to input and output to when the program is not running
+Can improve the efficency of the rebalance algorithm
+
+
+
+functions grouped in different module files

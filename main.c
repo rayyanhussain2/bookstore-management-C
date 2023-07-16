@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <AVLTrees.c>
 
 struct book{
     char title [201]; //Requires a dynamic \0
@@ -90,7 +91,7 @@ int main()
     setupBook(pCurrBook, pFile);
     fclose(pFile);
     pFile = NULL;
-
+    
     puts(pCurrBook -> title);
     puts(pCurrBook -> ISBN);
     puts(pCurrBook -> author);
