@@ -27,7 +27,7 @@ struct nodeAVL{
     struct nodeAVL* pRight;
 };
 
-unsigned int getMax(unsigned int a, unsigned int b){
+int getMax(int a, int b){
     return (a > b)? a : b;
 }
 
@@ -82,7 +82,6 @@ struct nodeAVL* lrRotation(struct nodeAVL* pCurrNode){
     return llRotation(pCurrNode);
 }
 
-
 struct nodeAVL* insertAVL(struct nodeAVL* pCurrNode, int val){
     if(pCurrNode == NULL){
         struct nodeAVL* pTempNode = (struct nodeAVL*) malloc (sizeof(struct nodeAVL));
@@ -92,40 +91,39 @@ struct nodeAVL* insertAVL(struct nodeAVL* pCurrNode, int val){
         pTempNode -> height = 0;
         return pTempNode;
     }
-    else if(pCurrNode -> value > val){
+    else if (pCurrNode -> value > val){
         pCurrNode -> pLeft = insertAVL(pCurrNode -> pLeft, val);
-    }else{
+    }else if (pCurrNode -> value < val){
         pCurrNode -> pRight = insertAVL(pCurrNode -> pRight, val); //handles the case where the title is the same
+    }else{
+        return pCurrNode;
     }
 
     //backtracking
     //recalculate the heights
     pCurrNode -> height =  1 + getMax(getHeight(pCurrNode -> pLeft), getHeight(pCurrNode -> pRight));
     short int balanceFactor = getBalanceFactor(pCurrNode);
-
     if(balanceFactor > 1){
         //RR
-        if(pCurrNode -> pRight ->pRight != NULL){
+        if(val > pCurrNode -> pRight -> value){
             pCurrNode = rrRotation(pCurrNode);
-         }else{
+            }else{
             //RL
             pCurrNode = rlRotation(pCurrNode);
         }
     }else if(balanceFactor < -1){
         //LL
-        if(pCurrNode -> pLeft -> pLeft != NULL){
+        if(val < pCurrNode -> pLeft -> value){
             pCurrNode = llRotation(pCurrNode);
         }else{
             //LR
             pCurrNode = lrRotation(pCurrNode);
         }
     }
-
-    //recalculating heights
-    pCurrNode -> height = getHeight(pCurrNode);
-
     return pCurrNode;
 }
+
+
 
 void preDisplay(struct nodeAVL* pRoot){
     if (pRoot == NULL)
