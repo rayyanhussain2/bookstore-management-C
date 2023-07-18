@@ -103,6 +103,7 @@ struct nodeAVL* insertAVL(struct nodeAVL* pCurrNode, int val){
     //recalculate the heights
     pCurrNode -> height =  1 + getMax(getHeight(pCurrNode -> pLeft), getHeight(pCurrNode -> pRight));
     short int balanceFactor = getBalanceFactor(pCurrNode);
+    //Checking the imbalance with respect to the inserted node
     if(balanceFactor > 1){
         //RR
         if(val > pCurrNode -> pRight -> value){
@@ -123,7 +124,86 @@ struct nodeAVL* insertAVL(struct nodeAVL* pCurrNode, int val){
     return pCurrNode;
 }
 
+struct nodeAVL* minTree(struct nodeAVL* pCurrNode){
+    while(pCurrNode -> pLeft != NULL){
+        pCurrNode = pCurrNode -> pLeft;
+    }
+    return pCurrNode;
+}
 
+struct nodeAVL* returnSuccessorTwoChildren(struct nodeAVL* pCurrNode){
+    return minTree(pCurrNode -> pRight);
+}
+
+struct nodeAVL* deleteAVL(struct nodeAVL* pCurrNode, int val){
+    if(pCurrNode == NULL)
+    {
+        puts("Node not found");
+        return NULL;
+    }
+
+    if(pCurrNode -> value > val){
+        pCurrNode -> pLeft = deleteAVL(pCurrNode -> pLeft, val);
+    }else if(pCurrNode -> value < val){
+        pCurrNode -> pRight = deleteAVL(pCurrNode -> pRight, val);
+    }else{
+        //we've found the node
+
+        //the node has no children
+        if(pCurrNode -> pLeft == NULL && pCurrNode -> pRight == NULL){
+            free(pCurrNode);
+            return NULL;
+        }
+
+        //the node has one child
+        else if(pCurrNode -> pLeft != NULL && pCurrNode -> pRight == NULL){
+            struct nodeAVL* returnNode = pCurrNode -> pLeft;
+            free(pCurrNode);
+            return returnNode;
+        }else if(pCurrNode -> pLeft == NULL && pCurrNode -> pRight != NULL){
+            struct nodeAVL* returnNode = pCurrNode -> pRight;
+            free(pCurrNode);
+            return returnNode;
+        }
+
+        //the node has two children
+        else{
+            //Find successor
+            struct nodeAVL* successorNode = returnSuccessorTwoChildren(pCurrNode);
+
+            //Copy Data
+            pCurrNode -> value = successorNode -> value;
+
+            //Free the node
+            pCurrNode -> pRight = deleteAVL(pCurrNode -> pRight, successorNode -> value);
+        }
+    }
+
+
+    //rebalancing
+    pCurrNode -> height =  1 + getMax(getHeight(pCurrNode -> pLeft), getHeight(pCurrNode -> pRight));
+    short int balanceFactor = getBalanceFactor(pCurrNode);
+
+    //Checking in general
+    if(balanceFactor > 1){
+        //RR
+        if(pCurrNode -> pRight -> pRight != NULL){
+            pCurrNode = rrRotation(pCurrNode);
+            }else{
+            //RL
+            pCurrNode = rlRotation(pCurrNode);
+        }
+    }else if(balanceFactor < -1){
+        //LL
+        if(pCurrNode -> pLeft -> pLeft != NULL){
+            pCurrNode = llRotation(pCurrNode);
+        }else{
+            //LR
+            pCurrNode = lrRotation(pCurrNode);
+        }
+    }
+    return pCurrNode;
+}
 
 void preDisplay(struct nodeAVL* pRoot){
     if (pRoot == NULL)
@@ -135,13 +215,15 @@ void preDisplay(struct nodeAVL* pRoot){
 }
 
 int main(){
-    int arr[] = {10, 20, 30, 40, 50, 25};
-    int arrSize = 6;
+    int arr[] = {9, 5, 10, 0, 6, 11, -1, 1, 2};
+    int arrSize = 9;
     struct nodeAVL* pHead = NULL;
     for(int i = 0; i < arrSize; i++){
         pHead = insertAVL(pHead, arr[i]);
     }
-
+    preDisplay(pHead);
+    puts("\n");    
+    pHead = deleteAVL(pHead, 10);
     preDisplay(pHead);
 
     return 0;
