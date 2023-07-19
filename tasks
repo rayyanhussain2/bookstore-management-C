@@ -47,3 +47,5 @@ Can improve the efficency of the rebalance algorithm
 functions grouped in different module files
 
 each book is a struct seperate from the avl tree which points to the book struct
+
+using gtk for the UI
