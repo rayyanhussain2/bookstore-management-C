@@ -5,6 +5,7 @@
         "vcruntime.h": "c",
         "corecrt_wstring.h": "c",
         "vcruntime_string.h": "c",
-        "corecrt_memory.h": "c"
+        "corecrt_memory.h": "c",
+        "stdbool.h": "c"
     }
 }

@@ -8,14 +8,14 @@ Create a management system for an online bookstore that allows users to browse, 
 Requirements:
 2. Data Structure Selection: Choose appropriate data structures for storing and managing books efficiently. Consider using data structures like hash tables, binary search trees, or balanced search trees for efficient searching and retrieval.
 
-3. File I/O: Implement functionality to read book information from a file at the start of the program and update the file with changes made during the program execution. This ensures the bookstore inventory is persistent.
+3. File I/O: Implement functionality to read book information from a file at the start of the  program and update the file with changes made during the program execution. This ensures the bookstore inventory is persistent.
 
 4. Searching: Implement efficient search algorithms (e.g., binary search or hash-based search) to allow users to search for books by title, author, or genre.
 
 5. Sorting: Implement sorting algorithms (e.g., merge sort, quicksort, or heapsort) to sort books based on various criteria such as title, author, or price.
 
 6. Book Operations: Implement operations such as adding a new book, deleting an existing book, searching for a book by title or author, updating book information, and maintaining book availability.
-
+--------------------------------------------------------------------
 7. User Interface: Design a user-friendly interface to interact with the online bookstore system. Users should be able to browse books, search for books, add books to a shopping cart, and complete the purchase process.
 
 8. Error Handling: Implement proper error handling to handle scenarios such as invalid user inputs, book not found, out-of-stock books, or file read/write errors.
@@ -45,3 +45,5 @@ Can improve the efficency of the rebalance algorithm
 
 
 functions grouped in different module files
+
+each book is a struct seperate from the avl tree which points to the book struct

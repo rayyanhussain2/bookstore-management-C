@@ -1,27 +1,11 @@
-/*
-Balance Factor of a given node in a AVL Tree -1, 0, 1 (left heavy, balanced, right heavy)
-Insertion, delete, search operation is O(logn) time.
-Single Rotation
-Double Rotation
-height of a node in AVL trees is max height of its children + 1;
-
-In insertion we only go up to the parent node until which there is a balance factor not from the range
-{-1, 0, 1}. No further reordering required for ancestors. 
-In deletion we have to go up to the root node because there might be nodes which are not balanced.
-
-In insertion there are four cases after inserting a node. Refer to the picture. In single rotation,
-we take h+2 as the pivot. In double we take h+1 as the pivot.
-
-In deletion there might be cases when h+2 has two h+1 children. In such a case we do single rotation on h+2.
-And deletion in AVL trees when a node has two children, we replace by its predecessor rather than its successor.
-H or worst case time complexity is approx h < 1:4404 log2N;
-*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
+#include "header/book.h"
 
 struct nodeAVL{
-    int value;
+    struct book* pBook;
     unsigned int height;    
     struct nodeAVL* pLeft;
     struct nodeAVL* pRight;
@@ -82,19 +66,20 @@ struct nodeAVL* lrRotation(struct nodeAVL* pCurrNode){
     return llRotation(pCurrNode);
 }
 
-struct nodeAVL* insertAVL(struct nodeAVL* pCurrNode, int val){
+struct nodeAVL* insertAVL(struct nodeAVL* pCurrNode, struct book* newBook){
     if(pCurrNode == NULL){
         struct nodeAVL* pTempNode = (struct nodeAVL*) malloc (sizeof(struct nodeAVL));
-        pTempNode -> value = val;
+        pTempNode -> pBook = newBook;
         pTempNode -> pRight = NULL;
         pTempNode -> pLeft = NULL;
         pTempNode -> height = 0;
         return pTempNode;
     }
-    else if (pCurrNode -> value > val){
-        pCurrNode -> pLeft = insertAVL(pCurrNode -> pLeft, val);
-    }else if (pCurrNode -> value < val){
-        pCurrNode -> pRight = insertAVL(pCurrNode -> pRight, val); //handles the case where the title is the same
+    
+    else if (strcmp(pCurrNode -> pBook -> title, newBook -> title) > 0){
+        pCurrNode -> pLeft = insertAVL(pCurrNode -> pLeft, newBook);
+    }else if (strcmp(pCurrNode -> pBook -> title, newBook -> title) < 0){
+        pCurrNode -> pRight = insertAVL(pCurrNode -> pRight, newBook); //handles the case where the title is the same
     }else{
         return pCurrNode;
     }
@@ -106,7 +91,7 @@ struct nodeAVL* insertAVL(struct nodeAVL* pCurrNode, int val){
     //Checking the imbalance with respect to the inserted node
     if(balanceFactor > 1){
         //RR
-        if(val > pCurrNode -> pRight -> value){
+        if(strcmp(newBook -> title, pCurrNode -> pRight -> pBook -> title) > 0){
             pCurrNode = rrRotation(pCurrNode);
             }else{
             //RL
@@ -114,7 +99,7 @@ struct nodeAVL* insertAVL(struct nodeAVL* pCurrNode, int val){
         }
     }else if(balanceFactor < -1){
         //LL
-        if(val < pCurrNode -> pLeft -> value){
+        if(strcmp(newBook -> title, pCurrNode -> pLeft -> pBook -> title) < 0){
             pCurrNode = llRotation(pCurrNode);
         }else{
             //LR
@@ -135,6 +120,7 @@ struct nodeAVL* returnSuccessorTwoChildren(struct nodeAVL* pCurrNode){
     return minTree(pCurrNode -> pRight);
 }
 
+/*
 struct nodeAVL* deleteAVL(struct nodeAVL* pCurrNode, int val){
     if(pCurrNode == NULL)
     {
@@ -204,27 +190,12 @@ struct nodeAVL* deleteAVL(struct nodeAVL* pCurrNode, int val){
     }
     return pCurrNode;
 }
-
+*/
 void preDisplay(struct nodeAVL* pRoot){
     if (pRoot == NULL)
         return;
 
-    printf("%d ", pRoot -> value);
+    printf("%s ", pRoot -> pBook -> title);
     preDisplay(pRoot -> pLeft);
     preDisplay(pRoot -> pRight);
-}
-
-int main(){
-    int arr[] = {9, 5, 10, 0, 6, 11, -1, 1, 2};
-    int arrSize = 9;
-    struct nodeAVL* pHead = NULL;
-    for(int i = 0; i < arrSize; i++){
-        pHead = insertAVL(pHead, arr[i]);
-    }
-    preDisplay(pHead);
-    puts("\n");    
-    pHead = deleteAVL(pHead, 10);
-    preDisplay(pHead);
-
-    return 0;
 }
