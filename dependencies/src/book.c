@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 struct bookNode{
-    char title [201]; //Requires a dynamic \0
+    char title [202]; //Requires a dynamic \0
     char ISBN[14]; 
     char author [71]; //Requires a dynamic \0
     char publisher[71]; //Requires a dynamic \0
@@ -112,5 +113,12 @@ void setupBookFile(struct bookNode** genreHeads, FILE* pFile)
     }
 }
 
-struct book* setupBookInput(){
+void setupBookInput(struct bookNode** genreHeads){
+    struct bookNode* pNewBook = (struct bookNode *) malloc (sizeof(struct bookNode));    
+
+    fputs("Please enter title of the book (200 char max)", stdout);
+    fgets(&(pNewBook -> title[0]), 200, stdin);
+    fputs(&(pNewBook -> title[0]), stdout);
+
+
 }

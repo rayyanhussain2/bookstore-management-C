@@ -1,10 +1,8 @@
-#include <stdio.h>
+#include <gtk/gtk.h>
 
-void test(int start){
-    printf("%d\n", ++start);
-    test(start);
-}
-int main()
-{
-    test(0);
+int main(){
+  gtk_init();
+  gtk_main();
+  GtkWidget* window = gtk_window_new();
+  gtk_quit();
 }

@@ -1,0 +1,75 @@
+GTK+ (GIMP Toolkit) Cheatsheet (Generated from chatGPT):
+
+1. Initialization:
+   - gtk_init(&argc, &argv);   // Initialize GTK+ library
+
+2. Windows and Widgets:
+   - GtkWidget* window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+   - GtkWidget* button = gtk_button_new_with_label("Click me!");
+
+3. Signals and Callbacks:
+   - g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+   - g_signal_connect(button, "clicked", G_CALLBACK(callback_function), data);
+
+4. Layouts:
+   - GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+   - GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+   - gtk_container_add(GTK_CONTAINER(window), vbox);
+   - gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
+
+5. Widgets Configuration:
+   - gtk_widget_set_size_request(widget, width, height);
+   - gtk_widget_set_sensitive(widget, TRUE/FALSE);
+   - gtk_widget_set_visible(widget, TRUE/FALSE);
+
+6. Packing Widgets:
+   - gtk_container_add(GTK_CONTAINER(parent), child);
+   - gtk_box_pack_start(GTK_BOX(parent), child, expand, fill, padding);
+
+7. Dialogs:
+   - GtkWidget* dialog = gtk_dialog_new_with_buttons("Title", GTK_WINDOW(parent),
+                      GTK_DIALOG_MODAL, "Button1", GTK_RESPONSE_OK, "Button2", GTK_RESPONSE_CANCEL, NULL);
+   - gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+
+8. Buttons:
+   - GtkWidget* button = gtk_button_new_with_label("Click me!");
+   - const gchar* label = gtk_button_get_label(GTK_BUTTON(button));
+
+9. Entry and Text:
+   - GtkWidget* entry = gtk_entry_new();
+   - gchar* text = gtk_entry_get_text(GTK_ENTRY(entry));
+
+10. Drawing Area:
+   - GtkWidget* drawing_area = gtk_drawing_area_new();
+   - g_signal_connect(drawing_area, "draw", G_CALLBACK(draw_callback), data);
+
+11. Menus and Menu Items:
+   - GtkWidget* menu = gtk_menu_new();
+   - GtkWidget* menu_item = gtk_menu_item_new_with_label("Item");
+   - gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_item);
+
+12. Toolbars:
+   - GtkWidget* toolbar = gtk_toolbar_new();
+   - gtk_toolbar_insert(GTK_TOOLBAR(toolbar), gtk_tool_button_new_from_stock(GTK_STOCK_NEW), -1);
+
+13. Icon Themes:
+   - GtkIconTheme* icon_theme = gtk_icon_theme_get_default();
+   - GdkPixbuf* icon = gtk_icon_theme_load_icon(icon_theme, "icon_name", size, flags, NULL);
+
+14. CSS Styling:
+   - gtk_widget_set_name(widget, "widget_name");
+   - GtkCssProvider* provider = gtk_css_provider_new();
+   - gtk_css_provider_load_from_data(provider, "css_data", -1, NULL);
+   - gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
+                     GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+15. Main Loop:
+   - gtk_main();   // Enters the main GTK+ loop
+
+16. Event Handling:
+   - gboolean event_callback(GtkWidget* widget, GdkEvent* event, gpointer user_data) { ... }
+
+17. Memory Management:
+   - Use g_object_unref() to release resources when finished with a GObject.
+   - Use g_free() for memory allocated with g_malloc(), g_strdup(), etc.
+

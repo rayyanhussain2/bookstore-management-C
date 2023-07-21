@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "dependencies/src/book.c"
+#include "dependencies/src/gtk.c"
 
 #define genreCount 30
 
@@ -61,7 +62,6 @@ int main()
     }
 
     //Main menu
-    /*
     while(true){
         puts("Library Management System");
         puts("Please select one of the following options:");
@@ -69,9 +69,13 @@ int main()
         puts("2. Delete a book");
         puts("3. Search for a book");
         puts("4. Exit");
-        char selection = getchar();
+        char selection;
+        selection = fgetc(stdin);
+        //to clear the \n in the buffer
+        fgetc(stdin);
         if(selection == '1'){
-            
+            fputs("lol", stdout);
+            setupBookInput(&genreHeads[0]);
         }
         else if(selection == '2'){
             //run somet
@@ -90,9 +94,4 @@ int main()
         
     fclose(pFile);
     pFile = NULL;
-
-
-    preDisplay(avlRoot);
-    */
-    
 }
