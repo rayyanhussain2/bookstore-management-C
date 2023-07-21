@@ -56,4 +56,5 @@ each book is a struct seperate from the avl tree which points to the book struct
 
 
 //  
-using gtk4 for the UI frontend, fixed size of 1280 x 720 so as to avoid resizing issues
+using raygui for the UI frontend, fixed size of 1280 x 720 so as to avoid resizing issues. Took up raygui for its simplicity. Initilly thought of gTK
+

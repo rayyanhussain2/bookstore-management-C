@@ -1,8 +1,7 @@
-#include <gtk/gtk.h>
+#include "raylib.h"
+#include "raygui.h"
 
 int main(){
-  gtk_init();
-  gtk_main();
-  GtkWidget* window = gtk_window_new();
-  gtk_quit();
+
+  return 0;
 }
