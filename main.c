@@ -2,9 +2,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "customAVL.c"
-#include <gtk/gtk.h>
+#include "dependencies/src/book.c"
+
 #define genreCount 30
+
 //in 64 bit systems, ech memory address is 64 bits or 8 bytes
 //is this done on hardware or software part
 //can be abstract or hardware
@@ -42,24 +43,49 @@
 29. Young Adult
 */
 
+
 int main()
 {
-    struct nodeAVL* genreHeads[genreCount];
+    //setting up initial variables, reading from saved file
+    struct bookNode* genreHeads[genreCount];
     for(int i = 0; i < genreCount; i++){
         genreHeads[i] = NULL;
     }
-
     FILE* pFile = fopen("data.txt", "r");
-    struct nodeAVL* avlRoot = NULL;
 
-    //Loop
-    char currChar = fgetc(pFile);
-    while(currChar != EOF){
-        ungetc(currChar, pFile);
-        struct book* pCurrBook = (struct book*) malloc (sizeof(struct book));
-        setupBook(pCurrBook, pFile);
-        avlRoot = insertAVL(avlRoot, pCurrBook);
-        currChar = fgetc(pFile);
+    //File Input
+    setupBookFile(&genreHeads[0], pFile);
+    for(int i = 0; i < genreCount; i++){
+        preDisplay(genreHeads[i]);
+        printf("\n");
+    }
+
+    //Main menu
+    /*
+    while(true){
+        puts("Library Management System");
+        puts("Please select one of the following options:");
+        puts("1. Add a new book");
+        puts("2. Delete a book");
+        puts("3. Search for a book");
+        puts("4. Exit");
+        char selection = getchar();
+        if(selection == '1'){
+            
+        }
+        else if(selection == '2'){
+            //run somet
+        }
+        else if(selection == '3'){
+
+        }
+        else if(selection == '4'){
+            break;
+        }
+        else{
+            puts("Invalid input, try again");
+            system("clear");
+        }
     }
         
     fclose(pFile);
@@ -67,5 +93,6 @@ int main()
 
 
     preDisplay(avlRoot);
+    */
     
 }
