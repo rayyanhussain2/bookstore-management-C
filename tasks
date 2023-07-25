@@ -57,4 +57,13 @@ each book is a struct seperate from the avl tree which points to the book struct
 
 //  
 using raygui for the UI frontend, fixed size of 1280 x 720 so as to avoid resizing issues. Took up raygui for its simplicity. Initilly thought of gTK
+dropped UI. Will be doing it on CUI only.
+
+the readme file will have all the codes for genres and and title lenghts.
+
+wrote a custom fgetS function so that we know the current first char  of the buffer
+
+//Improvements could have been made
+check for existing conflicting names / ISBN 
+Encryption and decryption of files
 

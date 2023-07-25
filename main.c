@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "dependencies/src/book.c"
-#include "dependencies/src/gtk.c"
-
 #define genreCount 30
 
 //in 64 bit systems, ech memory address is 64 bits or 8 bytes
@@ -54,44 +52,58 @@ int main()
     }
     FILE* pFile = fopen("data.txt", "r");
 
-    //File Input
-    setupBookFile(&genreHeads[0], pFile);
-    for(int i = 0; i < genreCount; i++){
-        preDisplay(genreHeads[i]);
-        printf("\n");
-    }
+    //Decrypt
 
-    //Main menu
+    //Input
+    setupBookFile(&genreHeads[0], pFile); //Done
+
+    //Main menu - Done
     while(true){
-        puts("Library Management System");
-        puts("Please select one of the following options:");
-        puts("1. Add a new book");
-        puts("2. Delete a book");
-        puts("3. Search for a book");
-        puts("4. Exit");
-        char selection;
-        selection = fgetc(stdin);
-        //to clear the \n in the buffer
-        fgetc(stdin);
+        system("clear");
+        printTitleSticky();
+        printMenu();
+        
+        int checkRes = checkEE();
+        if (checkRes != 1)
+            goto breakout;
+
+        char selection = fgetc(stdin);
+        clearBuffer();
+
         if(selection == '1'){
-            fputs("lol", stdout);
+            //Insert Done
             setupBookInput(&genreHeads[0]);
         }
         else if(selection == '2'){
-            //run somet
-        }
-        else if(selection == '3'){
+            //Search
 
         }
-        else if(selection == '4'){
-            break;
+        else if(selection == '3'){
+            //List 
         }
-        else{
-            puts("Invalid input, try again");
-            system("clear");
+        else if(selection == '4'){
+            //Predisplay
+            for(int i = 0; i < genreCount; i++)
+            {
+                preDisplay(genreHeads[i]);
+                printf("\n");
+            }
+            //Encrypt
+
+            //Write To file
+            break;
+
+            //close file
+            fclose(pFile);
+            pFile = NULL;
+
+            //free nodes
+
+            return 0;
+        }
+        else{//done
+        breakout:
+                printError();  
         }
     }
-        
-    fclose(pFile);
-    pFile = NULL;
 }

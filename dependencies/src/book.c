@@ -3,17 +3,20 @@
 #include <stdlib.h>
 
 struct bookNode{
-    char title [202]; //Requires a dynamic \0
+    char title [201]; //Requires a dynamic \0
     char ISBN[14]; 
     char author [71]; //Requires a dynamic \0
     char publisher[71]; //Requires a dynamic \0
     char year[5];
-    short availability;
+    short copies;
     short genre;
     unsigned int height;    
     struct bookNode* pLeft;
     struct bookNode* pRight;
 };
+
+#include "gtk.c"
+
 
 #include "customAVL.c"
 
@@ -61,7 +64,7 @@ void setupBookFile(struct bookNode** genreHeads, FILE* pFile)
                     
                     case 7:
                         availabilityBuffer[index] = '\0';
-                        pNewBook -> availability = atoi(availabilityBuffer);
+                        pNewBook -> copies = atoi(availabilityBuffer);
 
                 }
                 phase +=  1;
@@ -115,10 +118,172 @@ void setupBookFile(struct bookNode** genreHeads, FILE* pFile)
 
 void setupBookInput(struct bookNode** genreHeads){
     struct bookNode* pNewBook = (struct bookNode *) malloc (sizeof(struct bookNode));    
+    _Bool confirmation = 0;
+init:
+    system("clear");
+    printTitleSticky();
+    fputs("Add a book\n\n", stdout);
 
-    fputs("Please enter title of the book (200 char max)", stdout);
-    fgets(&(pNewBook -> title[0]), 200, stdin);
-    fputs(&(pNewBook -> title[0]), stdout);
+    if(confirmation){
+        printBookInfo(pNewBook);
+        fputs("\nDo you want to add this book to the library? [Y/n] ", stdout);
+        
+        char y = fgetc(stdin);
+        if(y == 'y' || y == '\n' || y == 'Y'){
+            *(genreHeads + (pNewBook -> genre)) = insertAVL(*(genreHeads + (pNewBook -> genre)), pNewBook);
+        }
+        else{
+            free(pNewBook);
+            pNewBook = NULL;
+            return;
+        }
+    }else{
+        char charCurrPointer;
 
+        fputs("Title: ", stdout); //clears buffer
+    title:
+        int checkRes = checkEE();
+        if (checkRes == -1){
+            return;
+        }else if(checkRes == 0){
+            goto title;
+        }
+        else{
+            charCurrPointer = fGetStdin(&(pNewBook -> title[0]), 201);//last character is always \0, \n will be put if extra space is there
+            if(charCurrPointer != '\n'){
+                clearBuffer();
+            }
+        }
 
+    isbn1:
+        fputs("ISBN: ", stdout);
+    isbn:
+        checkRes = checkEE();
+        if (checkRes == -1){
+            return;
+        }else if(checkRes == 0){
+            goto isbn;
+        }
+        else{
+            char tempBuffer[14];
+            charCurrPointer = fGetStdin(&tempBuffer[0], 14);//last character is always \0, \n will be put if extra space is there
+            if(atol(&tempBuffer[0]) != 0 && strlen(&tempBuffer[0]) == 13){
+                strcpy(&(pNewBook -> ISBN[0]), &tempBuffer[0]);
+                if(charCurrPointer != '\n')
+                    clearBuffer();
+            }else{
+                printf("Invalid input, try again\n");
+                if(charCurrPointer != '\n')
+                    clearBuffer();
+                goto isbn1;
+            }
+        }
+
+        fputs("Author: ", stdout);
+    author:
+        checkRes = checkEE();
+        if (checkRes == -1){
+            return;
+        }else if(checkRes == 0){
+            goto author;
+        }
+        else{
+            charCurrPointer = fGetStdin(&(pNewBook -> author[0]), 71);//last character is always \0, \n will be put if extra space is there
+            if(charCurrPointer != '\n'){
+                clearBuffer();
+            }
+        }
+
+        fputs("Publisher: ", stdout);
+    publisher:
+        checkRes = checkEE();
+        if (checkRes == -1){
+            return;
+        }else if(checkRes == 0){
+            goto publisher;
+        }
+        else{
+            charCurrPointer = fGetStdin(&(pNewBook -> publisher[0]), 71);//last character is always \0, \n will be put if extra space is there
+            if(charCurrPointer != '\n'){
+                clearBuffer();
+            }
+        }
+
+    year:
+        fputs("Year: ", stdout);
+    year1:
+        checkRes = checkEE();
+        if (checkRes == -1){
+            return;
+        }else if(checkRes == 0){
+            goto year1;
+        }
+        else{
+            char tempBuffer[5];
+            charCurrPointer = fGetStdin(&tempBuffer[0], 5);//last character is always \0, \n will be put if extra space is there
+            if(atoi(tempBuffer) != 0){
+                strcpy(&(pNewBook -> year[0]), &tempBuffer[0]);
+                if(charCurrPointer != '\n')
+                    clearBuffer();
+            }else{
+                printf("Invalid input, try again\n");
+                if(charCurrPointer != '\n')
+                    clearBuffer();
+                goto year;
+            }
+        }
+
+    copies1:
+        fputs("Copies: ", stdout);
+    copies:
+        checkRes = checkEE();
+        if (checkRes == -1){
+            return;
+        }else if(checkRes == 0){
+            goto copies;
+        }
+        else{
+            char tempBuffer[5];
+            charCurrPointer = fGetStdin(&tempBuffer[0], 5);//last character is always \0, \n will be put if extra space is there
+            int copiesInt = atoi(&tempBuffer[0]); 
+            if(copiesInt != 0){
+                pNewBook -> copies = copiesInt;
+                if(charCurrPointer != '\n')
+                    clearBuffer();
+            }else{
+                printf("Invalid input, try again\n");
+                if(charCurrPointer != '\n')
+                    clearBuffer();
+                goto copies1;
+            }
+        }
+
+    genre1:
+        fputs("Genre: ", stdout);
+    genre:
+        checkRes = checkEE();
+        if (checkRes == -1){
+            return;
+        }else if(checkRes == 0){
+            goto genre;
+        }
+        else{
+            char tempBuffer[3];
+            charCurrPointer = fGetStdin(&tempBuffer[0], 3);//last character is always \0, \n will be put if extra space is there
+            int genreInt = atoi(&tempBuffer[0]); 
+            if(genreInt != 0 && genreInt < 30){
+                if(charCurrPointer != '\n')
+                    clearBuffer();
+                pNewBook -> genre = genreInt;
+            }else{
+                printf("Invalid input, try again\n");
+                if(charCurrPointer != '\n')
+                    clearBuffer();
+                goto genre1;
+            }
+        }
+
+    confirmation = 1;
+    goto init;
+    }
 }

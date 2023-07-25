@@ -182,7 +182,7 @@ void preDisplay(struct bookNode* pRoot){
     if (pRoot == NULL)
         return;
 
-    printf("%s ", pRoot -> title);
+    printf("%s\n", pRoot -> title);
     preDisplay(pRoot -> pLeft);
     preDisplay(pRoot -> pRight);
 }
