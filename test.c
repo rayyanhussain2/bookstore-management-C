@@ -3,5 +3,12 @@
 #include <string.h>
 
 int main(){
-  printf("%i\n", strcmp("Lorem Ipsum", "Lorem Ipsum"));
+  char test[] = "lolwa";
+  FILE* pFile = fopen("test.txgt", "w");
+
+  fputs(&test[0], pFile);
+
+  fclose(pFile);
+  pFile = NULL;
+  return 0;
 } 

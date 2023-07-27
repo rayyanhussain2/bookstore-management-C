@@ -62,10 +62,12 @@ int checkEE0(){
 int fGetStdin(char* string, int strlen){
   //assumption is that the first character is not escape (clear buffer handled by checkEE)
   //another assumption is that the first character is not \n
-  char charPointer = '\0';
+  char charPointer;
   int i = 0;
-  while(charPointer != '\n' && i < strlen - 1){
+  while(i < strlen - 1){
     charPointer = fgetc(stdin);
+    if(charPointer == '\n')
+      break;
     *(string + i) = charPointer;
     i += 1;
   }

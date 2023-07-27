@@ -428,3 +428,48 @@ list:
         }
     }
 }
+
+void writeBookFile(struct bookNode* pBook, FILE* pFile){
+    fputs(&pBook -> title[0], pFile);
+    fputc(';', pFile);
+
+    fputs(&pBook -> ISBN[0], pFile);
+    fputc(';', pFile);
+    
+    fputs(&pBook -> author[0], pFile);
+    fputc(';', pFile);
+    
+    fputs(&pBook -> publisher[0], pFile);
+    fputc(';', pFile);
+    
+    fputs(&pBook -> year[0], pFile);
+    fputc(';', pFile);
+    
+    char genre[3];
+    sprintf(&genre[0], "%d", pBook -> genre);
+    fputs(&genre[0], pFile);
+    fputc(';', pFile);
+
+    char copies[5];
+    sprintf(&copies[0], "%d", pBook -> genre);
+    fputs(&copies[0], pFile);
+    fputc(';', pFile);
+    
+    
+    fputc('\n', pFile);
+}
+
+void preDisplayWrite(struct bookNode* pRoot, FILE* pFile){
+    if (pRoot == NULL)
+        return;
+
+    writeBookFile(pRoot, pFile);
+    preDisplayWrite(pRoot -> pLeft, pFile);
+    preDisplayWrite(pRoot -> pRight, pFile);
+}
+
+void writeBooksFile(struct bookNode** genreHeads, FILE* pFile){
+    for(int i = 0; i < 30; i++){
+        preDisplayWrite(*(genreHeads + i), pFile);
+    }
+}

@@ -66,8 +66,12 @@ wrote a custom fgetS function so that we know the current first char  of the buf
 //Improvements could have been made
 check for existing conflicting names / ISBN 
 Encryption and decryption of files
+sorting while listing and sorting according to various parameters
+
 
 one of the goals here was to also write clean code
 
 clearing buffer is the responsibility of the function / section calling it
+
+
 

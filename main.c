@@ -50,12 +50,15 @@ int main()
     for(int i = 0; i < genreCount; i++){
         genreHeads[i] = NULL;
     }
+
     FILE* pFile = fopen("data.txt", "r");
 
     //Decrypt
 
     //Input
     setupBookFile(&genreHeads[0], pFile); //Done
+
+    fclose(pFile);
 
     //Main menu - Done
     while(true){
@@ -85,14 +88,17 @@ int main()
         else if(selection == '4'){
             //Encrypt
   
-            //Write To file
-            break;
-
-            //close file
+            pFile = fopen("data.txt", "w");
+            //Write To file - Done
+            writeBooksFile(&genreHeads[0], pFile);
+            //close file - Done
             fclose(pFile);
             pFile = NULL;
 
-            //free nodes
+            //free nodes - Done
+            for(int i = 0; i < 30; i++){
+                genreHeads[i] = freeNodes(genreHeads[i]);
+            }
 
             return 0;
         }

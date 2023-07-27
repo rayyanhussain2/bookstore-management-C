@@ -201,3 +201,14 @@ void preDisplay(struct bookNode* pRoot){
     preDisplay(pRoot -> pLeft);
     preDisplay(pRoot -> pRight);
 }
+
+struct bookNode* freeNodes(struct bookNode* pNode){
+    if(pNode == NULL)
+        return NULL;
+        
+    pNode -> pLeft = freeNodes(pNode -> pLeft);
+    pNode -> pRight = freeNodes(pNode -> pRight);
+
+    free(pNode);
+    return NULL;
+}
