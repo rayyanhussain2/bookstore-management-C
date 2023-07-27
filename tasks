@@ -69,3 +69,5 @@ Encryption and decryption of files
 
 one of the goals here was to also write clean code
 
+clearing buffer is the responsibility of the function / section calling it
+

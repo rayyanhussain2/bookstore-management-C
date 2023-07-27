@@ -392,3 +392,39 @@ select:
         }
     }
 }
+
+void listBooks(struct bookNode** genreHeads){
+list1:
+    system("clear");
+    printTitleSticky();
+list:    
+    fputs("Enter genre number: ", stdout);
+    int checkRes = checkEE();
+    if (checkRes == -1){
+        return;
+    }else if(checkRes == 0){
+        goto list;
+    }
+    else{
+        char tempBuffer[3];
+        char charCurrPointer = fGetStdin(&tempBuffer[0], 3);//last character is always \0, \n will be put if extra space is there
+        int genreInt = atoi(&tempBuffer[0]); 
+        if(genreInt <= 30 && genreInt >= 0){
+            if(charCurrPointer != '\n')
+                clearBuffer();
+            
+            if(genreInt == 30){
+                for(int i = 0; i < 30; i++)
+                    preDisplay(*(genreHeads + i));
+            }else{
+                preDisplay(*(genreHeads + genreInt));
+            }
+            goto list;
+        }else{
+            fputs("Invalid input, try again\n\n", stdout);
+            if(charCurrPointer != '\n')
+                clearBuffer();
+            goto list1;
+        }
+    }
+}

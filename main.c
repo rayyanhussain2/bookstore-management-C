@@ -79,15 +79,10 @@ int main()
             searchBooks(&genreHeads[0]);
         }
         else if(selection == '3'){
-            //List 
+            //List - Done
+            listBooks(&genreHeads[0]); 
         }
         else if(selection == '4'){
-            //Predisplay
-            for(int i = 0; i < genreCount; i++)
-            {
-                preDisplay(genreHeads[i]);
-                printf("\n");
-            }
             //Encrypt
   
             //Write To file
