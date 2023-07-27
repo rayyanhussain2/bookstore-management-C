@@ -67,3 +67,5 @@ wrote a custom fgetS function so that we know the current first char  of the buf
 check for existing conflicting names / ISBN 
 Encryption and decryption of files
 
+one of the goals here was to also write clean code
+

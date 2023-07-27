@@ -43,6 +43,22 @@ int checkEE(){
 
 }
 
+int checkEE0(){
+  char check = fgetc(stdin);
+  if(check == '\n'){//Buffer's already cleared
+    return 0;
+  }else if(check == 27){
+    clearBuffer();
+    return -1;
+  }else if(check == '0'){
+    return 2;
+  }else{
+    ungetc(check, stdin);
+    return 1;
+  }
+
+}
+
 int fGetStdin(char* string, int strlen){
   //assumption is that the first character is not escape (clear buffer handled by checkEE)
   //another assumption is that the first character is not \n
@@ -54,7 +70,8 @@ int fGetStdin(char* string, int strlen){
     i += 1;
   }
 
-  *(string+i) = '\0';
+  if(strlen > 1)
+    *(string+i) = '\0';
 
   return charPointer;
 }
@@ -62,6 +79,7 @@ int fGetStdin(char* string, int strlen){
 void printBookInfo(struct bookNode* pBook){
   fputs("Title: ", stdout);
   fputs(&(pBook -> title[0]), stdout);
+  fputs("\n", stdout);
   
   fputs("ISBN: ", stdout);
   fputs(&(pBook -> ISBN[0]), stdout);
@@ -69,16 +87,20 @@ void printBookInfo(struct bookNode* pBook){
   
   fputs("Author: ", stdout);
   fputs(&(pBook -> author[0]), stdout);
+  fputs("\n", stdout);
+
 
   fputs("Publisher: ", stdout);
   fputs(&(pBook -> publisher[0]), stdout);
+  fputs("\n", stdout);
 
   fputs("Year: ", stdout);
   fputs(&(pBook -> year[0]), stdout);
+  fputs("\n", stdout);
 
-  fputs("\nCopies: ", stdout);
+  fputs("Available copies: ", stdout);
   printf("%d\n", pBook -> copies);
 
   fputs("Genre: ", stdout);
-  printf("%d\n", pBook -> genre);
+  printf("%d\n\n", pBook -> genre);
 }

@@ -75,8 +75,8 @@ int main()
             setupBookInput(&genreHeads[0]);
         }
         else if(selection == '2'){
-            //Search
-
+            //Search - Done
+            searchBooks(&genreHeads[0]);
         }
         else if(selection == '3'){
             //List 
@@ -89,7 +89,7 @@ int main()
                 printf("\n");
             }
             //Encrypt
-
+  
             //Write To file
             break;
 

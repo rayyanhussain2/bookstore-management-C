@@ -129,13 +129,15 @@ init:
         fputs("\nDo you want to add this book to the library? [Y/n] ", stdout);
         
         char y = fgetc(stdin);
-        if(y == 'y' || y == '\n' || y == 'Y'){
+        if(y == 'y' || y == 'Y' || y == '\n'){
             *(genreHeads + (pNewBook -> genre)) = insertAVL(*(genreHeads + (pNewBook -> genre)), pNewBook);
         }
         else{
             free(pNewBook);
             pNewBook = NULL;
-            return;
+            confirmation = 0;
+            clearBuffer();
+            goto init;
         }
     }else{
         char charCurrPointer;
@@ -172,7 +174,7 @@ init:
                 if(charCurrPointer != '\n')
                     clearBuffer();
             }else{
-                printf("Invalid input, try again\n");
+                fputs("Invalid input, try again\n\n", stdout);
                 if(charCurrPointer != '\n')
                     clearBuffer();
                 goto isbn1;
@@ -226,7 +228,7 @@ init:
                 if(charCurrPointer != '\n')
                     clearBuffer();
             }else{
-                printf("Invalid input, try again\n");
+                fputs("Invalid input, try again\n\n", stdout);
                 if(charCurrPointer != '\n')
                     clearBuffer();
                 goto year;
@@ -251,7 +253,7 @@ init:
                 if(charCurrPointer != '\n')
                     clearBuffer();
             }else{
-                printf("Invalid input, try again\n");
+                fputs("Invalid input, try again\n\n", stdout);
                 if(charCurrPointer != '\n')
                     clearBuffer();
                 goto copies1;
@@ -276,7 +278,7 @@ init:
                     clearBuffer();
                 pNewBook -> genre = genreInt;
             }else{
-                printf("Invalid input, try again\n");
+                fputs("Invalid input, try again\n\n", stdout);
                 if(charCurrPointer != '\n')
                     clearBuffer();
                 goto genre1;
@@ -285,5 +287,108 @@ init:
 
     confirmation = 1;
     goto init;
+    }
+}
+
+void searchBooks(struct bookNode** genreHeads){
+struct bookNode* bookFound = NULL;
+char charCurrPointer;
+char copiesChar[5];
+short copiesNew;
+int genreInt;
+char titleSearch[201];
+
+init:
+    system("clear");
+    printTitleSticky();
+    fputs("Search a book\n\n", stdout);
+
+    if(bookFound != NULL){
+        fputs("Book found!\n\n", stdout);
+        printBookInfo(bookFound);
+
+select:     
+        fputs("Enter the new number of copies for the book: ", stdout);
+        int checkRes = checkEE();
+        if (checkRes == -1){
+            return;
+        }else if(checkRes == 0){
+            goto select;
+        }
+        else{
+            charCurrPointer = fGetStdin(&copiesChar[0], 5);//last character is always \0, \n will be put if extra space is there
+            if (charCurrPointer != '\n'){
+                clearBuffer();
+            }
+            
+            if(atoi(&copiesChar[0]) == 0){
+               copiesNew = 0;
+            }
+            else{
+                copiesNew = atoi(&copiesChar[0]);
+            }
+        }
+
+        if(copiesNew == 0){
+            *(genreHeads + genreInt) = deleteAVL(*(genreHeads + genreInt), &titleSearch[0]);
+        }else{
+            bookFound -> copies = copiesNew;
+        }
+        return;
+    }
+    else{
+            fputs("Enter title of the book: ", stdout); //clears buffer
+        title:
+            int checkRes = checkEE();
+            if (checkRes == -1){
+                return;
+            }else if(checkRes == 0){
+                goto title;
+            }
+            else{
+                charCurrPointer = fGetStdin(&titleSearch[0], 201);//last character is always \0, \n will be put if extra space is there
+                if(charCurrPointer != '\n'){
+                    clearBuffer();
+                }
+                //printf("%d %d %d\n", titleSearch[11], titleSearch[12], titleSearch[10]);
+            }
+
+        genre1:
+            fputs("Enter genre number: ", stdout);
+        genre:
+            checkRes = checkEE();
+            if (checkRes == -1){
+                return;
+            }else if(checkRes == 0){
+                goto genre;
+            }
+            else{
+                char tempBuffer[3];
+                charCurrPointer = fGetStdin(&tempBuffer[0], 3);//last character is always \0, \n will be put if extra space is there
+                genreInt = atoi(&tempBuffer[0]); 
+                if(genreInt != 0 && genreInt <= 30 && genreInt >= 0){
+                    if(charCurrPointer != '\n')
+                        clearBuffer();
+                }else{
+                    fputs("Invalid input, try again\n\n", stdout);
+                    if(charCurrPointer != '\n')
+                        clearBuffer();
+                    goto genre1;
+                }
+            }
+
+        if(genreInt == 30){
+            for(int i = 0; i < 30; i++)
+            {
+                continue;
+            }
+        }else{
+            *(genreHeads + genreInt) = searchNode(*(genreHeads + genreInt), &titleSearch[0], &bookFound);
+                                            //Give me the address to the specific genre head
+            if(bookFound == NULL){
+                fputs("Book nhi mila\n", stdout);
+            }
+            goto init;
+        }
     }
 }

@@ -106,19 +106,13 @@ struct bookNode* returnSuccessorTwoChildren(struct bookNode* pCurrBook){
     return minTree(pCurrBook -> pRight);
 }
 
-/*
-struct bookNode* deleteAVL(struct bookNode* pCurrBook, int val){
-    if(pCurrBook == NULL)
-    {
-        puts("Node not found");
+struct bookNode* deleteAVL(struct bookNode* pCurrBook, char* bookSearchTitle){
+    if(pCurrBook == NULL){
         return NULL;
     }
 
-    if(pCurrBook -> value > val){
-        pCurrBook -> pLeft = deleteAVL(pCurrBook -> pLeft, val);
-    }else if(pCurrBook -> value < val){
-        pCurrBook -> pRight = deleteAVL(pCurrBook -> pRight, val);
-    }else{
+    int strcmpRes = strcmp(&(pCurrBook -> title[0]), bookSearchTitle);
+    if(strcmpRes == -10 || strcmpRes == 0){
         //we've found the node
 
         //the node has no children
@@ -144,13 +138,16 @@ struct bookNode* deleteAVL(struct bookNode* pCurrBook, int val){
             struct bookNode* successorNode = returnSuccessorTwoChildren(pCurrBook);
 
             //Copy Data
-            pCurrBook -> value = successorNode -> value;
+            strcpy(&(pCurrBook -> title[0]), &(successorNode -> title[0]));
 
             //Free the node
-            pCurrBook -> pRight = deleteAVL(pCurrBook -> pRight, successorNode -> value);
+            pCurrBook -> pRight = deleteAVL(pCurrBook -> pRight, successorNode -> title);
         }
+    }else if(strcmpRes > 0){
+        pCurrBook -> pLeft = deleteAVL(pCurrBook -> pLeft, bookSearchTitle);
+    }else{
+        pCurrBook -> pRight = deleteAVL(pCurrBook -> pRight, bookSearchTitle);
     }
-
 
     //rebalancing
     pCurrBook -> height =  1 + getMax(getHeight(pCurrBook -> pLeft), getHeight(pCurrBook -> pRight));
@@ -176,7 +173,25 @@ struct bookNode* deleteAVL(struct bookNode* pCurrBook, int val){
     }
     return pCurrBook;
 }
-*/
+
+struct bookNode* searchNode(struct bookNode* pCurrBook, char* titleSearch, struct bookNode** bookFound){
+    if(pCurrBook == NULL){
+        return NULL;
+        *bookFound = NULL;
+    }
+
+    int strcmpRes = strcmp(&(pCurrBook -> title[0]), titleSearch);
+    if(strcmpRes == -10 || strcmpRes == 0){
+        *bookFound = pCurrBook; 
+        return pCurrBook;
+    }else if(strcmpRes > 0){
+        pCurrBook -> pLeft = searchNode(pCurrBook -> pLeft, titleSearch, bookFound);
+    }else{
+        pCurrBook -> pRight = searchNode(pCurrBook -> pRight, titleSearch, bookFound);
+    }
+
+    return pCurrBook;
+} 
 
 void preDisplay(struct bookNode* pRoot){
     if (pRoot == NULL)
