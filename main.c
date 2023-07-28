@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+
 #include "dependencies/book.h"
 #define genreCount 30
 
@@ -56,11 +57,10 @@ int main()
     //Decrypt
 
     //Input
-    setupBookFile(&genreHeads[0], pFile); //Done
-
+    setupBookFile(&genreHeads[0], pFile); 
     fclose(pFile);
 
-    //Main menu - Done
+    //Main menu
     while(true){
         system("clear");
         printTitleSticky();
@@ -74,28 +74,28 @@ int main()
         clearBuffer();
 
         if(selection == '1'){
-            //Insert Done
+            //Insert 
             setupBookInput(&genreHeads[0]);
         }
         else if(selection == '2'){
-            //Search - Done
+            //Search 
             searchBooks(&genreHeads[0]);
         }
         else if(selection == '3'){
-            //List - Done
+            //List 
             listBooks(&genreHeads[0]); 
         }
         else if(selection == '4'){
             //Encrypt
   
             pFile = fopen("data.txt", "w");
-            //Write To file - Done
+            //Write To file
             writeBooksFile(&genreHeads[0], pFile);
-            //close file - Done
+            //close file 
             fclose(pFile);
             pFile = NULL;
 
-            //free nodes - Done
+            //free nodes 
             for(int i = 0; i < genreCount; i++){
                 genreHeads[i] = freeNodes(genreHeads[i]);
             }
