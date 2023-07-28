@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "dependencies/src/book.c"
+#include "dependencies/book.h"
 #define genreCount 30
 
 //in 64 bit systems, ech memory address is 64 bits or 8 bytes
@@ -68,7 +68,7 @@ int main()
         
         int checkRes = checkEE();
         if (checkRes != 1)
-            goto breakout;
+            goto invalid;
 
         char selection = fgetc(stdin);
         clearBuffer();
@@ -96,15 +96,14 @@ int main()
             pFile = NULL;
 
             //free nodes - Done
-            for(int i = 0; i < 30; i++){
+            for(int i = 0; i < genreCount; i++){
                 genreHeads[i] = freeNodes(genreHeads[i]);
             }
 
             return 0;
-        }
-        else{//done
-        breakout:
-                printError();  
+        }else{
+        invalid:
+            printError();
         }
     }
 }

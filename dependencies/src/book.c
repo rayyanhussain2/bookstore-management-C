@@ -1,25 +1,3 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
-struct bookNode{
-    char title [201]; //Requires a dynamic \0
-    char ISBN[14]; 
-    char author [71]; //Requires a dynamic \0
-    char publisher[71]; //Requires a dynamic \0
-    char year[5];
-    short copies;
-    short genre;
-    unsigned int height;    
-    struct bookNode* pLeft;
-    struct bookNode* pRight;
-};
-
-#include "gtk.c"
-
-
-#include "customAVL.c"
-
 void setupBookFile(struct bookNode** genreHeads, FILE* pFile)
 {
     char currChar = fgetc(pFile);
