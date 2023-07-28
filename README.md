@@ -1,8 +1,8 @@
-# Online Bookstore Management System - C Project
+# Bookstore Management System - C Project
 
 ## Overview
 
-This project is a C implementation of an Online Bookstore Management System, developed as part of the Data Structure and Algorithms course (CSE 102) at Indraprastha Institute of Information Technology, Delhi, for the Academic Year 2022 - 23. The main objective of this project was to apply the knowledge gained in the course to create a functional and efficient system that can handle a large number of books using appropriate data structures and algorithms.
+This project is a personal C implementation of a Bookstore Management System, inspired by the concepts learned during the Data Structure and Algorithms course (CSE 102) at Indraprastha Institute of Information Technology, Delhi, for the Academic Year 2022 - 23. The main objective of this project was to apply the knowledge gained in the course and create a functional and efficient system that can handle a large number of books using appropriate data structures and algorithms. The project serves as a practical application to solidify the understanding of data structures and algorithmic techniques in a real-world scenario.
 
 ## Features
 
@@ -16,7 +16,7 @@ This project is a C implementation of an Online Bookstore Management System, dev
 
 - **User Interface**: Although there were initial plans to use a front-end library like GTK+ or raygui, due to time constraints, the project is currently terminal-based, providing a simple text-based interface for users.
 
-- **Error Handling**: The project implements proper error handling mechanisms to manage scenarios such as invalid user inputs, book not found, out-of-stock books, and file read/write errors. This ensures smooth and reliable functioning of the system.
+- **Error Handling**: The project implements proper error handling mechanisms to manage scenarios such as invalid user inputs, book not found, and file read/write errors. This ensures smooth and reliable functioning of the system.
 
 - **Efficiency Optimization**: The project focuses on efficiency optimization to minimize time complexity for critical operations. AVL trees offer a logarithmic time complexity for insertion, searching, and deletion, ensuring optimal performance even with a large number of books.
 
@@ -38,7 +38,7 @@ While the current version of the Online Bookstore Management System is functiona
 
 - **Sorting While Listing**: Implementing sorting algorithms while listing books would improve the user experience by presenting the books in a more organized manner.
 
-- **Sorting According to Parameters**: Adding the ability to sort books based on various parameters like author, ISBN, etc., would further enhance the system's functionality and usability.
+- **Sorting According to Parameters**: Adding the ability to sort books based on other parameters like author, ISBN, etc., would further enhance the system's functionality and usability.
 
 ## Usage
 
@@ -52,22 +52,6 @@ To use the Online Bookstore Management System, follow these steps:
 
 4. Use the provided commands to browse, search, and perform various book operations.
 
-## License
-
-This project is provided under the [MIT License](LICENSE), allowing users to freely use, modify, and distribute the code, with appropriate attribution to the original author.
-
-## Contributions
-
-Contributions to the project are welcome! If you find any issues or have ideas for enhancements, feel free to submit a pull request or open an issue on the GitHub repository.
-
 ## Acknowledgments
 
 Special thanks to the instructors and faculty of the Data Structure and Algorithms course (CSE 102) at Indraprastha Institute of Information Technology, Delhi, for their guidance and support during the development of this project.
-
-## Contact
-
-For any further information or inquiries, please feel free to contact the project maintainer:
-
-[Your Name]
-[Your Email Address]
-[Your GitHub Profile]
